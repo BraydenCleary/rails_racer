@@ -11,22 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315214203) do
+ActiveRecord::Schema.define(:version => 20130315215903) do
+
+  create_table "game_users", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "game_id",    :null => false
+    t.integer  "player",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "games", :force => true do |t|
-    t.integer  "p1_position"
-    t.integer  "p2_position"
+    t.integer  "p1_position", :default => 0, :null => false
+    t.integer  "p2_position", :default => 0, :null => false
     t.integer  "winner_id"
-    t.integer  "time"
-
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "game_time"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
+    t.string   "name",            :null => false
+    t.string   "email",           :null => false
+    t.string   "password_digest", :null => false
     t.string   "remember_token"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
