@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20130315214203) do
     t.integer  "p2_position"
     t.integer  "winner_id"
     t.integer  "time"
+
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
