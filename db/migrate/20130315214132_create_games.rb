@@ -3,8 +3,8 @@ class CreateGames < ActiveRecord::Migration
     create_table :games do |t|
       t.integer :p1_position
       t.integer :p2_position
-      t.integertime :winner_id
-
+      t.integer :winner_id
+      t.integer :time
       t.timestamps
     end
   end

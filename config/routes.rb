@@ -1,5 +1,9 @@
 RailsRacer::Application.routes.draw do
   
+  get "game/new"
+
+  get "game/create"
+
   resources :users
   resources :games
   
