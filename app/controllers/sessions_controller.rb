@@ -4,10 +4,11 @@ class SessionsController < ApplicationController
     @user = User.find_by_email(params[:session][:email])
     if @user && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
-      flash[:notice] = "Welcome back, #{@user.name}!"
+      flash[:success] = "Welcome back, #{@user.name}!"
       redirect_to new_game_path
     else
-      render 'pages/main'
+      flash[:error] = 'Inccorect email/password combination.'
+      redirect_to root_path
     end
   end
 

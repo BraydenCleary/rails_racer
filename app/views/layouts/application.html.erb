@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>RailsRacer</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <% if current_user %>
-    <%= current_user.name %>
-    <%= link_to 'Log Out', logout_path, :method => 'delete' %>
-  <% end %>
-<%= yield %>
-
-</body>
+  <head>
+    <title>RailsRacer</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <link href='http://fonts.googleapis.com/css?family=Faster+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <header class="nav">
+    <% if current_user %>
+      <%= link_to 'Home', root_path %>
+      <%= link_to 'Browse Games', games_path %>
+      <%= link_to 'My Profile', user_path(current_user) %>
+      <%= link_to 'Log Out', logout_path, :method => 'delete' %>
+    <% end %>
+    </header>
+    <div class='text-error'>
+      <% if flash[:error] %>
+        <%= flash[:error] %>
+      <% end %>
+    </div>
+    <div class='notice'>
+      <% if flash[:notice] %>
+        <%= flash[:notice] %>
+      <% end %>
+    </div>
+    <div class='success'>
+      <% if flash[:success] %>
+        <%= flash[:success] %>
+      <% end %>
+    </div>
+  <%= yield %>
+  </body>
 </html>

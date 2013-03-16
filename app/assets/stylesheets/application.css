@@ -11,3 +11,32 @@
  *= require_self
  *= require_tree .
  */
+
+.notice {
+  color: blue;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+.new-user-form {
+  margin-top: 50px;
+  margin-left: 1em;
+}
+
+.title {
+  font-family: 'Faster One', cursive;
+}
+
+#main-picture {
+  position: absolute;
+  top: 50px;
+  right: 0;
+}
+
+
