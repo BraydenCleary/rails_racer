@@ -14,11 +14,9 @@
 ActiveRecord::Schema.define(:version => 20130316055504) do
 
   create_table "game_users", :force => true do |t|
-    t.integer  "user_id",    :null => false
-    t.integer  "game_id",    :null => false
-    t.integer  "player"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "user_id", :null => false
+    t.integer "game_id", :null => false
+    t.integer "player"
   end
 
   create_table "games", :force => true do |t|
@@ -28,12 +26,6 @@ ActiveRecord::Schema.define(:version => 20130316055504) do
     t.integer  "game_time"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-  end
-
-  create_table "games_users", :force => true do |t|
-    t.integer "user_id", :null => false
-    t.integer "game_id", :null => false
-    t.integer "player"
   end
 
   create_table "users", :force => true do |t|
