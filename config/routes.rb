@@ -2,7 +2,7 @@ RailsRacer::Application.routes.draw do
   
   resources :sessions, only: [:create, :destroy]
 
-
+  delete '/logout' => "sessions#destroy", :as => 'logout'
 
   root :to => 'pages#main'
 
