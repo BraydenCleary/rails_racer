@@ -1,4 +1,10 @@
 RailsRacer::Application.routes.draw do
+  
+  resources :sessions, only: [:create, :destroy]
+
+
+
+  root :to => 'pages#main'
 
   resources :users
   resources :games do
