@@ -14,7 +14,15 @@ FactoryGirl.define do
   factory :game_user do
     user_id 1
     game_id 1
-    player 1
+    player  1
   end
+
+  factory :game do
+    p1_position 0
+    p2_position 0
+    winner_id   nil
+    game_time   nil
+  end
+
 
 end

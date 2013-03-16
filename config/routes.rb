@@ -1,11 +1,12 @@
 RailsRacer::Application.routes.draw do
-  
-  get "game/new"
-
-  get "game/create"
 
   resources :users
-  resources :games
+  resources :games do
+    member do
+      put 'move'
+    end
+  end
+
   
 
 
