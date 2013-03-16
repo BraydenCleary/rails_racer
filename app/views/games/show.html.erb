@@ -1,0 +1,16 @@
+<span data-player1-id="<%= @user1.id %>"></span>
+<span data-player2-id="<%= @user2.id %>"></span>
+<span data-game-id="<%= @game.id %>"></span>
+
+<table>
+  <tr class='player1-board'>
+    <% 10.times do |n| %>
+      <td><%= n %></td> 
+    <% end %>
+  </tr>
+  <tr class='player2-board'>
+    <% 10.times do |n| %>
+      <td><%= n %></td> 
+    <% end %>
+  </tr> 
+</table>
