@@ -42,5 +42,4 @@ class GamesController < ApplicationController
     @user2 = User.find(2)
   end
 
->>>>>>> good luck to us
 end
