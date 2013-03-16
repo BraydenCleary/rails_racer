@@ -7,7 +7,7 @@ class GameController < ApplicationController
 
   def move
     game = Game.find(params[:id])
-    player = game.locate_player(params[:user_id], params[:id])
+    player = game.locate_game_user(params[:user_id])
     game.advance!(player)
     render :json => game
   end

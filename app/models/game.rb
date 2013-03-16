@@ -12,9 +12,9 @@ class Game < ActiveRecord::Base
     game_user.player == 1 ? self.p1_position += 1 : self.p2_position += 1
   end
 
-  def locate_player(user_id, game_id)
+  def locate_game_user(user_id)
     GameUser.where(:user_id => user_id,
-                   :game_id => game_id).first
+                   :game_id => self.id).first
   end
 
 end
