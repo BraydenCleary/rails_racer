@@ -8,13 +8,13 @@ class Game < ActiveRecord::Base
   validates :p2_position, :presence => true
 
 
-  def advance!(user)
-    
-    # if game_user.player == 1
-    #   self.p1_position += 1 
-    # else 
-    #   self.p2_position += 1
-    # end
+  def advance!(game_user)
+    p game_user
+    if game_user.player == 1
+      self.update_attributes(p1_position: self.p1_position + 1) 
+    else 
+      self.update_attributes(p2_position: self.p2_position + 1)
+    end
   end
 
   def locate_game_user(user_id)

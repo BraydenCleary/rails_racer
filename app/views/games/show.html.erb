@@ -1,16 +1,114 @@
+<div data-game-id="<%= @game.id %>"></div>
 <span data-player1-id="<%= @user1.id %>"></span>
-<span data-player2-id="<%= @user2.id %>"></span>
-<span data-game-id="<%= @game.id %>"></span>
+<p data-player2-id="<%= @user2 && @user2.id %>"></p>
+
 
 <table>
   <tr class='player1-board'>
-    <% 10.times do |n| %>
+    <% 100.times do |n| %>
       <td><%= n %></td> 
     <% end %>
   </tr>
   <tr class='player2-board'>
-    <% 10.times do |n| %>
+    <% 100.times do |n| %>
       <td><%= n %></td> 
     <% end %>
   </tr> 
 </table>
+
+<script type="text/javascript">
+
+function Player(id) {
+  this.id       = id;
+  this.position = 1;
+}
+
+Player.prototype.advance = function() {
+  this.position ++;
+};
+
+function Game(player1, player2, id) {
+  this.player1    = player1;
+  this.player2    = player2;
+  this.startTime  = $.now();
+  this.boardSize  = 100;
+  this.gameTime   = null;
+  this.winner     = null;
+  this.id         = id;
+}
+
+Game.prototype.finished = function() {
+  if(game.player1.position == game.boardSize || game.player2.position == game.boardSize){
+    game.gameTime = game.startTime - $.now();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Game.prototype.updateBoard = function() {
+  $("td").removeClass("active");
+  $(".player1-board td:nth-child(" +player1.position+ ")").addClass("active");
+  $(".player2-board td:nth-child(" +player2.position+ ")").addClass("active");
+}
+
+Game.prototype.onKeyUp = function(event) {
+  if (game.finished() == true){
+    //$.post
+  } else {
+    if(event.keyCode == 65){
+      player1.advance();
+      $.ajax({
+        url: '/games/'+ game.id +'/move',
+        type: 'PUT',
+        data: {user_id: player1.id},
+        success: function(data) {
+          player1.position = data.p1_position;
+          player2.position = data.p2_position;
+          game.updateBoard();
+        }
+      });
+      game.updateBoard();
+      if(game.finished() == true){
+        game.winner = player1;
+        alert("player 1 wins!!!!!!!!");
+      }
+    }
+    else if(event.keyCode == 76){
+      player2.advance();
+      debugger
+      $.ajax({
+        url: '/games/'+ game.id +'/move',
+        type: 'PUT',
+        data: {user_id: player2.id},
+        success: function(data) {
+          player1.position = data.p1_position;
+          player2.position = data.p2_position;
+          game.updateBoard();
+        }
+      });
+      game.updateBoard();
+      if(game.finished() == true){
+        game.winner = player2;
+        alert("player 2 wins!!!!!!!!");
+      }
+    }
+  }  
+}
+
+jQuery(document).ready(function($) {
+  var gameId = $("div").attr("data-game-id"); 
+  var p1Id = $("span").attr("data-player1-id"); 
+  var p2Id = $("p").attr("data-player2-id"); 
+  debugger
+  player1 = new Player(p1Id);
+  player2 = new Player(p2Id);
+  game = new Game(player1, player2, gameId);
+  game.updateBoard();
+  $(document).on('keyup', game.onKeyUp);
+});
+
+
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+</script>

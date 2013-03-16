@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
       flash[:notice] = "Welcome back, #{@user.name}!"
-      redirect_to games_path
+      redirect_to new_game_path
     else
       render 'pages/main'
     end
