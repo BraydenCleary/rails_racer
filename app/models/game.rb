@@ -48,4 +48,8 @@ class Game < ActiveRecord::Base
     User.find(loser.user_id)
   end
 
+  def open?
+    self.game_users.length < 2
+  end
+
 end

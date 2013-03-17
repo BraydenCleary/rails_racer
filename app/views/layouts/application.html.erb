@@ -22,10 +22,13 @@
         <%= flash[:error] %>
       <% end %>
     </div>
-    <div class='notice'>
-      <% if flash[:notice] %>
-        <%= flash[:notice] %>
+    <% flash.each do |name, msg| %>
+      <% if msg.is_a?(String) %>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>
+    <% end %>
+    <div class='notice'>
+        <%= flash[:notice] %>
     </div>
     <div class='success'>
       <% if flash[:success] %>

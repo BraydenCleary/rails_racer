@@ -19,4 +19,8 @@ class User < ActiveRecord::Base
   def average_game_time
     self.games.average('game_time')
   end
+
+  def won_last_game?
+    self.games.last.winner_id == self.id
+  end
 end

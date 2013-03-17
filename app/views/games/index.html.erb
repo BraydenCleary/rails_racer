@@ -1,1 +1,7 @@
-<%= link_to 'Join Game!', new_game_path %>
+<h3>Create Game</h3>
+<%= link_to 'Create Game!', new_game_path %>
+
+<h3>Join Open Game!</h3>
+<% @open_games.each do |game| %>
+  <%= link_to game.id, game_path(game) %>
+<% end %>

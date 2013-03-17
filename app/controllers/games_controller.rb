@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   
   def index
-
+    @open_games = Game.all.select { |game| game.open? }
   end
 
   def new

@@ -1,12 +1,19 @@
 <%= @user.name %>'s Ruby Racer Profile
 
+<% if @user.won_last_game? %>
+  <div class='winner'>
+    <h4>You won your last game!</h4>
+  </div>
+<% else %>
+  <div class='loser'>
+    <h4>You lost your last game.</h4>
+  </div>
+<% end %>
 
 <% if @user.games.empty? %>
   <h2>No Games played. <%=link_to 'Play a Game!', games_path %></h2>
 <% else %>
-  <h2>Your Win Percentage: <%= ((@user.games_won.length.to_f / @user.games.length.to_f) * 100) %>%
-  <h2>Your Average Gameplay time: <%= @user.games.average('game_time') %></h2><%# make sure to check only games that they won %>
-  <h2>Your Fastest Game Time: <%= @user.games.minimum('game_time') %> </h2> <%# make sure to check only games that they won %>
+  <h2>Your Win Percentage: <%= ((@user.games_won.length.to_f / @user.games.length.to_f) * 100).round(2) %>%  <%# write methods to abstract from views %>
+  <h2>Your Average Gameplay time: <%= ((@user.games_won.average('game_time')).to_f / 1000).abs.round(2) %> seconds</h2>
+  <h2>Your Fastest Game Time: <%= (@user.games_won.maximum('game_time').to_f / 1000).abs.round(2) %> seconds </h2>
 <% end %>
-
-

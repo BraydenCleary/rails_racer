@@ -12,6 +12,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    puts 'YYYYY'
+    puts flash.inspect
     @user = User.find(params[:id])
   end
 end

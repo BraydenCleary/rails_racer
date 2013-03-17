@@ -3,6 +3,12 @@
 <span data-player1-id="<%= @user1.id %>"></span>
 <p data-player2-id="<%= @user2 && @user2.id %>"></p>
 
+<% if current_user.id == @user1.id %>
+  <%= "You're Player1. Press 'q' to move!" %>
+<% else %>
+  <%= "You're Player2.  Press 'p' to move!" %>
+<% end %>
+
 
 <table>
   <tr class='player1-board'>
@@ -10,6 +16,11 @@
       <td><%= n %></td> 
     <% end %>
   </tr>
+
+  <tr class="blank_row">
+    <td colspan="3"></td>
+  </tr>
+
   <tr class='player2-board'>
     <% 10.times do |n| %>
       <td><%= n %></td> 
@@ -59,7 +70,7 @@ Game.prototype.onKeyUp = function(event) {
   if (game.finished() == true){
     $(location).attr('href', '/users/' + $('.current_user').attr('data-current-user-id'))
   } else {
-    if(event.keyCode == 65){
+    if(event.keyCode == 81){
       player1.advance();
       $.ajax({
         url: '/games/'+ game.id +'/move',
@@ -86,7 +97,7 @@ Game.prototype.onKeyUp = function(event) {
         });
       }
     }
-    else if(event.keyCode == 76){
+    else if(event.keyCode == 80){
       player2.advance();
       $.ajax({
         url: '/games/'+ game.id +'/move',
