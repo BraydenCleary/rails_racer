@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
     self.games.where(:winner_id => self.id)
   end
 
+  def games_lost
+    self.games.where("winner_id != ?", self.id)
+  end
+
   def average_game_time
     self.games.average('game_time')
   end

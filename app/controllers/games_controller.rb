@@ -23,11 +23,10 @@ class GamesController < ApplicationController
   end 
 
   def move
-    p params
     game = Game.find(params[:id])
     game_user = game.locate_game_user(params[:user_id])
     game.advance!(game_user)
-    render json: { p1_position: game.p1_position, p2_position: game.p2_position }
+    render json: { p1_position: game.p1_position, p2_position: game.p2_position, p2_id: game.player2.id }
   end
 
   def show
@@ -40,5 +39,11 @@ class GamesController < ApplicationController
       game_user.update_attributes(player: 2)
     end
   end
+
+  def results
+    @game = Game.find(params[:id])
+    @game.finish!(params[:winner],params[:game_time], params[:position])
+    redirect_to user_path(current_user)
+  end 
 
 end

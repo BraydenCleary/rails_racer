@@ -1,16 +1,17 @@
-<div data-game-id="<%= @game.id %>"></div>
+<div class='game' data-game-id="<%= @game.id %>"></div>
+<div class='current_user' data-current-user-id="<%= current_user.id%>"></div>
 <span data-player1-id="<%= @user1.id %>"></span>
 <p data-player2-id="<%= @user2 && @user2.id %>"></p>
 
 
 <table>
   <tr class='player1-board'>
-    <% 100.times do |n| %>
+    <% 10.times do |n| %>
       <td><%= n %></td> 
     <% end %>
   </tr>
   <tr class='player2-board'>
-    <% 100.times do |n| %>
+    <% 10.times do |n| %>
       <td><%= n %></td> 
     <% end %>
   </tr> 
@@ -30,10 +31,12 @@ Player.prototype.advance = function() {
 function Game(player1, player2, id) {
   this.player1    = player1;
   this.player2    = player2;
+  this.player2Id  = null;
   this.startTime  = $.now();
-  this.boardSize  = 100;
+  this.boardSize  = 10;
   this.gameTime   = null;
   this.winner     = null;
+  this.loser      = null;
   this.id         = id;
 }
 
@@ -54,7 +57,7 @@ Game.prototype.updateBoard = function() {
 
 Game.prototype.onKeyUp = function(event) {
   if (game.finished() == true){
-    //$.post
+    $(location).attr('href', '/users/' + $('.current_user').attr('data-current-user-id'))
   } else {
     if(event.keyCode == 65){
       player1.advance();
@@ -65,18 +68,26 @@ Game.prototype.onKeyUp = function(event) {
         success: function(data) {
           player1.position = data.p1_position;
           player2.position = data.p2_position;
+          player2.id       = data.p2_id;
           game.updateBoard();
         }
       });
       game.updateBoard();
       if(game.finished() == true){
         game.winner = player1;
-        alert("player 1 wins!!!!!!!!");
+        game.loser  = player2;
+        $.ajax({
+          url: '/games/' + game.id + '/results',
+          type: 'POST',
+          data: {game_time: game.gameTime, winner: game.winner, loser:  game.loser, position: {player1: game.player1.position, player2: game.player2.position}},
+          success: function(data) {
+            $(location).attr('href', '/users/' + $('.current_user').attr('data-current-user-id'))
+          }
+        });
       }
     }
     else if(event.keyCode == 76){
       player2.advance();
-      debugger
       $.ajax({
         url: '/games/'+ game.id +'/move',
         type: 'PUT',
@@ -84,23 +95,32 @@ Game.prototype.onKeyUp = function(event) {
         success: function(data) {
           player1.position = data.p1_position;
           player2.position = data.p2_position;
+          player2.id       = data.p2_id;
           game.updateBoard();
         }
       });
       game.updateBoard();
       if(game.finished() == true){
         game.winner = player2;
-        alert("player 2 wins!!!!!!!!");
+        game.loser  = player1;
+        $.ajax({
+          url: '/games/' + game.id + '/results',
+          type: 'POST',
+          data: {game_time: game.gameTime, winner: game.winner, loser:  game.loser, position: {player1: game.player1.position, player2: game.player2.position}},
+          success: function(data) {
+            $(location).attr('href', '/users/' + $('.current_user').attr('data-current-user-id'))
+          }
+        });
       }
     }
   }  
 }
 
 jQuery(document).ready(function($) {
-  var gameId = $("div").attr("data-game-id"); 
+  var gameId = $('.game').attr('data-game-id');
   var p1Id = $("span").attr("data-player1-id"); 
   var p2Id = $("p").attr("data-player2-id"); 
-  debugger
+  var currentUserId = $('.current_user').attr('data-current-user-id');
   player1 = new Player(p1Id);
   player2 = new Player(p2Id);
   game = new Game(player1, player2, gameId);

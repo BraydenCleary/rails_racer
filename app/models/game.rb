@@ -22,4 +22,30 @@ class Game < ActiveRecord::Base
                    :game_id => self.id).first
   end
 
+  def finish!(winner, game_time, position)
+    self.update_attributes(winner_id: winner[:id], 
+                           game_time: game_time,
+                           p1_position: position[:player1],
+                           p2_position: position[:player2] )
+  end
+
+  def player2
+    user_id = self.game_users.where(:player => 2).first.user_id
+    user = User.find(user_id)
+  end
+
+  def player1
+    user_id = self.game_users.where(:player => 1).first.user_id
+    user = User.find(user_id)
+  end
+
+  def winner
+    User.find(self.winner_id)
+  end
+
+  def loser
+    loser = self.game_users.where("user_id != ?", self.winner_id).first
+    User.find(loser.user_id)
+  end
+
 end

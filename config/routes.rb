@@ -10,6 +10,8 @@ RailsRacer::Application.routes.draw do
   resources :games do
     member do
       put 'move'
+      post 'results'
+      get 'waiting'
     end
   end
 

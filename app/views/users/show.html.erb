@@ -4,9 +4,9 @@
 <% if @user.games.empty? %>
   <h2>No Games played. <%=link_to 'Play a Game!', games_path %></h2>
 <% else %>
-  <h2>Your Win Percentage: <% ((@user.games_won.length.to_f / @user.games.length.to_f) * 100).to_f %>%
-  <h2>Your Average Gameplay time: <%= @user.games.average('game_time') %></h2>
-  <h2>Your Fastest Game Time: <%= @user.games.minimum('game_time') %> </h2>
+  <h2>Your Win Percentage: <%= ((@user.games_won.length.to_f / @user.games.length.to_f) * 100) %>%
+  <h2>Your Average Gameplay time: <%= @user.games.average('game_time') %></h2><%# make sure to check only games that they won %>
+  <h2>Your Fastest Game Time: <%= @user.games.minimum('game_time') %> </h2> <%# make sure to check only games that they won %>
 <% end %>
 
 
