@@ -16,4 +16,9 @@
   <h2>Your Win Percentage: <%= ((@user.games_won.length.to_f / @user.games.length.to_f) * 100).round(2) %>%  <%# write methods to abstract from views %>
   <h2>Your Average Gameplay time: <%= ((@user.games_won.average('game_time')).to_f / 1000).abs.round(2) %> seconds</h2>
   <h2>Your Fastest Game Time: <%= (@user.games_won.maximum('game_time').to_f / 1000).abs.round(2) %> seconds </h2>
+  
+  <h2>Your average winning margin:<%= @user.average_winning_margin %></h2>
+  <h2>Your average losing margin:<%= @user.average_losing_margin %></h2>
+  <h2>Your average total margin:<%= @user.average_total_margin %></h2>
+
 <% end %>

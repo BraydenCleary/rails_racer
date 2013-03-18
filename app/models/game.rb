@@ -52,4 +52,10 @@ class Game < ActiveRecord::Base
     self.game_users.length < 2
   end
 
+  def winning_margin
+    (p1_position - p2_position).abs
+  end
+  
+
+
 end

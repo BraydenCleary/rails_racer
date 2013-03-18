@@ -23,4 +23,30 @@ class User < ActiveRecord::Base
   def won_last_game?
     self.games.last.winner_id == self.id
   end
+
+  def average_winning_margin
+    winning_margin.to_f / self.games_won.length.to_f
+  end
+
+   def average_losing_margin
+    losing_margin.to_f / self.games_lost.length.to_f
+  end
+
+  def average_total_margin
+    total_margin.to_f / self.games.length.to_f 
+  end
+
+  def winning_margin
+    self.games_won.inject(0) { |sum, game| sum += game.winning_margin.to_i }
+  end
+
+  def losing_margin
+    self.games_lost.inject(0) { |difference, game| difference -= game.winning_margin.to_i }
+  end
+
+  def total_margin
+    self.winning_margin + self.losing_margin
+  end
+
+
 end
